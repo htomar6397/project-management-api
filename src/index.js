@@ -3,20 +3,18 @@ const express = require("express");
 const cors = require("cors");
 
 const bodyParser = require("body-parser");
-const { authenticateToken } = require("./middlewares/authMiddleware");
+const { authenticateToken } = require("./middleware/authMiddleware");
 
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-
-app.use(authenticateToken);
-
 
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(authenticateToken);
 
 // routes
 app.use("/users", userRoutes);
