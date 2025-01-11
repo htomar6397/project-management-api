@@ -7,9 +7,10 @@ const { authenticateToken } = require("./middleware/authMiddleware");
 
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
-const taskRoutes = require("./routes/taskRoutes");
+const task1Routes = require("./routes/task1Routes");
+const task2Routes = require("./routes/task2Routes");
 const authRoutes = require("./routes/authRoutes");
-
+const { addProject } = require("./middleware/addProject");
 
 const app = express();
 
@@ -31,8 +32,12 @@ app.use('/auth', authRoutes);
 // routes
 app.use("/users",authenticateToken, userRoutes);
 app.use("/projects",authenticateToken, projectRoutes);
-app.use("/projects",authenticateToken, taskRoutes);
-
+app.use("/projects/:projectId/tasks", authenticateToken,addProject, task1Routes);
+app.use(
+  "/tasks",
+  authenticateToken,
+  task2Routes
+);
 app.get("/", (req, res) => {
   res.send("Welcome to the Project Management API!");
 });
