@@ -2,15 +2,20 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/userRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+
 
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-// user routes
+
+// routes
 app.use("/users", userRoutes);
+app.use("/projects", projectRoutes);
+
 app.get("/", (req, res) => {
   res.send("Welcome to the Project Management API!");
 });
