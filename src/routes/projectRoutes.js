@@ -1,5 +1,6 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
+const { authorizeProjectAccess } = require("../middleware/accessMiddleware");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -41,7 +42,7 @@ router.get("/", async (req, res) => {
 });
 
 // Update a Project
-router.put("/:id", async (req, res) => {
+router.put("/:id",authorizeProjectAccess, async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, status } = req.body;
@@ -59,7 +60,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a Project
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorizeProjectAccess, async (req, res) => {
   try {
     const { id } = req.params;
 

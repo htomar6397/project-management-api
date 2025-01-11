@@ -1,10 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+
 const bodyParser = require("body-parser");
+const { authenticateToken } = require("./middlewares/authMiddleware");
+
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+
+app.use(authenticateToken);
 
 
 
