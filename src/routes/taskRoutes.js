@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { authorizeProjectAccess } = require("../middleware/accessMiddleware");
-const { deleteTask, updateTask, listTasks, createTask } = require("../controllers/tastController");
+const { deleteTask, updateTask, listTasks, createTask } = require("../controllers/taskController");
 
 const router = express.Router();
 
