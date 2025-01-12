@@ -19,9 +19,19 @@ const getUser = async (req, res, ) => {
      }
 };
 
-// update a  user
+// update a  user (Self-Updation Only)
 const updateUser = async (req, res) => {
   const { id } = req.params;
+  
+  const userIdFromToken = req.user.userId;
+
+  // Ensure that the user can only update their own account
+  if (id !== userIdFromToken) {
+    return res
+      .status(403)
+      .json({ error: "You can only update your own account." });
+  }
+
   const { name } = req.body;
   try {
 
@@ -57,8 +67,8 @@ const updateUser = async (req, res) => {
 
 // Delete a User (Self-Deletion Only)
 const deleteUser = async (req, res) => {
-  const userIdFromParams = req.params.id; // Extract user ID from route parameter
-  const userIdFromToken = req.user.userId; // Extract user ID from the JWT token
+  const userIdFromParams = req.params.id; 
+  const userIdFromToken = req.user.userId; 
 
   // Ensure that the user can only delete their own account
   if (userIdFromParams !== userIdFromToken) {
@@ -79,7 +89,7 @@ const deleteUser = async (req, res) => {
         where: { id: task.projectId },
         select: { userId: true }, // Fetch the project owner ID
         });
-        // Reassign the task to the project owner
+        
         await prisma.task.update({
           where: { id: task.id },
           data: { assignedUserId: project.userId },
@@ -105,10 +115,11 @@ const deleteUser = async (req, res) => {
 
     // Success response
     res.status(200).json({
-      message: "Your account and associated data have been successfully deleted.",
+      message:
+        "Your account and associated projects(with their tasks) have been successfully deleted and your assigned task transfer to their project owner.",
     });
   } catch (error) {
-    console.error("Error deleting user:", error);
+    // console.error("Error deleting user:", error);
     res.status(500).json({
       error: "Failed to delete your account. Please try again later.",
       details: error.message,

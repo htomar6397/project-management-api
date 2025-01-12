@@ -27,12 +27,12 @@ app.use((err, req, res, next) => {
 
 
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 //authenticate routes
-app.use("/users",authenticateToken, userRoutes);
-app.use("/projects",authenticateToken, projectRoutes);
-app.use("/tasks",authenticateToken, taskRoutes );
+app.use("/api/users",authenticateToken, userRoutes);
+app.use("/api/projects",authenticateToken, projectRoutes);
+app.use("/api/tasks",authenticateToken, taskRoutes );
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Project Management API!");
@@ -42,6 +42,7 @@ app.get("/", (req, res) => {
 // Catch-all route for undefined endpoints
 // optional ....... => (handle at frontend)
 app.use((req, res) => {
+  
   res.status(404).json({
     error: "The requested route does not exist.",
   });

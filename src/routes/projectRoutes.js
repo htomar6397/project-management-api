@@ -22,7 +22,7 @@ router.delete("/:id", authorizeProjectAccess, deleteProject);
 router.post("/:id/tasks",authorizeProjectAccess, createTask); 
 
 // List Tasks for a Specific Project
-router.get("/:id/tasks", listTasksByProject); 
+router.get("/:id/tasks",authorizeProjectAccess, listTasksByProject); 
 
 
 module.exports = router;

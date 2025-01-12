@@ -9,7 +9,7 @@ const createTask = async (req, res) => {
 
     const { title, description, status, assignedUserId } = req.body;
 
-
+// optional ..... => ( Frontends Handle this)
     if (!title || !description || !status || !assignedUserId) {
       return res
         .status(400)
@@ -25,6 +25,7 @@ const createTask = async (req, res) => {
     if (!assignedUser) { 
       return res.status(404).json({ error: "Assigned User not found" });
     } 
+// ................
 
     const newTask = await prisma.task.create({
       data: {
@@ -36,7 +37,7 @@ const createTask = async (req, res) => {
       },
     });
 
-    res.status(201).json(newTask);
+    res.status(201).json({ "message" : "Task created Succesfuly ",newTask});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create task" });
@@ -112,6 +113,7 @@ const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, description, status, assignedUserId } = req.body;
 
+    // optional ..... => ( Frontends Handle this)
     if (!title && !description && !status && !assignedUserId) { 
       return res
         .status(400)
@@ -125,6 +127,8 @@ const updateTask = async (req, res) => {
             "Invalid status : status can only have {TODO, IN_PROGRESS, DONE}",
         });
     }
+    // ................
+
 
     const updatedTask = await prisma.task.update({
       where: { id },
@@ -149,8 +153,9 @@ const deleteTask = async (req, res) => {
      res.status(200).json({ message: "Task Deleted Succesfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Task not Found or Failed to delete task" });
+    res.status(500).json({ error: "Failed to delete task" });
   }
 };
+
 
 module.exports={createTask,updateTask,deleteTask,listTasksByAssignedUserAndStatus,listTasksByProject};
