@@ -1,10 +1,10 @@
+const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-
+// Login User
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -24,7 +24,6 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-
     // Generate JWT
     const token = jwt.sign(
       { userId: user.id, email: user.email },
@@ -32,26 +31,22 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // Set the token in a custom header
+    res.set("Authorization", `Bearer ${token}`);
+
+    // Respond with the token as well (optional, for client-side use)
     res.status(200).json({ token });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+// Register a New User
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // Check if the user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ error: "User already exists with this email" });
-    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);

@@ -1,10 +1,21 @@
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-
+const validStatus = ["PLANNED", "ONGOING", "COMPLETED"];
 const createProject= async (req, res) => {
   try {
     const { name, description, status } = req.body;
+    if(!name || !description ||!status) 
+      return res.status(400).json({ error: "Please provide name, description, status" });
+    
+    if (!validStatus.includes(status))
+      return res
+        .status(400)
+        .json({
+          error:
+            "Invalid status : status can only have {PLANNED, ONGOING, COMPLETED}",
+        });
+
     const user = req.user;
     console.log(user, user.userId);
     
@@ -17,7 +28,12 @@ const createProject= async (req, res) => {
       },
     });
 
-    res.status(201).json(newProject);
+    res
+      .status(201)
+      .json({
+        message: "Project Created with  name, description, status Successfully ",
+        newProject,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create project" });
@@ -36,18 +52,36 @@ const listProjects = async (req, res) => {
 };
 
 // Update a Project
-
 const updateProject =  async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, status } = req.body;
+     if (!name && !description && !status) 
+      return res
+       .status(400)
+       .json({ error: "Please provide any of these details to update , name, description or status" });
+    
+    if (status && !validStatus.includes(status))
+      return res
+        .status(400)
+        .json({
+          error:
+            "Invalid status : status can only have {PLANNED, ONGOING, COMPLETED}",
+        });
+
 
     const updatedProject = await prisma.project.update({
       where: { id },
       data: { name, description, status },
     });
 
-    res.status(200).json({message:"Updated Succesfully" ,updatedProject});
+    res
+      .status(200)
+      .json({
+        message:
+          "Updated Succesfully - details can be updated only (name, description or status) ",
+        updatedProject,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to update project" });
@@ -57,16 +91,27 @@ const updateProject =  async (req, res) => {
 // Delete a Project
 const deleteProject=   async (req, res) => {
   try {
-    const { id } = req.params;
+    const  projectId = req.params.id;
 
-    await prisma.project.delete({
-      where: { id },
+    // Step 1: Delete tasks related to the project
+    await prisma.task.deleteMany({
+      where: {
+        projectId: projectId,
+      },
     });
 
-    res.status(204).json({ message: "Project Deleted Succesfully" });
+    // Step 2: Delete the project
+    await prisma.project.delete({
+      where: {
+        id: projectId,
+      },
+    });
+
+   
+   res.status(200).json({ message: "Project deleted and all associated tasks deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to delete project" });
+    res.status(500).json({ message: "Failed to delete project" , error:error.message });
   }
 };
 

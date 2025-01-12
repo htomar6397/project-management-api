@@ -52,5 +52,5 @@ function validateLoginData(req, res, next) {
 module.exports = {
   validateRegisterData,
   validateLoginData,
-  // Include other exported functions like validateRegisterData
+
 };

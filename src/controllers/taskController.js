@@ -1,20 +1,36 @@
 const { PrismaClient } = require("@prisma/client");
+const checkUserExists = require("../utils/checkUserExists");
 const prisma = new PrismaClient();
-
-
+const validStatus = ["TODO", "IN_PROGRESS", "DONE"  ];
+//  create a task under a project
 const createTask = async (req, res) => {
   try {
-    const  projectId  = req.projectId;
-   
-   
-    
+    const  projectId  = req.params.id;
+
     const { title, description, status, assignedUserId } = req.body;
+
+
+    if (!title || !description || !status || !assignedUserId) {
+      return res
+        .status(400)
+        .json({ error: "Please provide title, description, status, assignedUserId" });
+    }
+    if (!validStatus.includes(status)) {
+      return res
+       .status(400)
+       .json({ error: "Invalid status. Please choose from TODO, IN_PROGRESS, DONE" });
+    }
+
+   const assignedUser = await checkUserExists(assignedUserId);
+    if (!assignedUser) { 
+      return res.status(404).json({ error: "Assigned User not found" });
+    } 
 
     const newTask = await prisma.task.create({
       data: {
         title,
         description,
-        status: status || "TODO",
+        status: status ,
         projectId,
         assignedUserId,
       },
@@ -27,21 +43,32 @@ const createTask = async (req, res) => {
   }
 };
 
-// List Tasks for a Project
+// List Tasks for a Specific Project with filtered data 
 const listTasksByProject =  async (req, res) => {
   try {
-    const  projectId  = req.projectId;
+    const  projectId  = req.params.id;
     const { status, assignedUserId } = req.query;
+    
+    const project = await prisma.project.findFirst({
+      where: { id: projectId }
+    });
+  
+    
+    if(!project) 
+      return res.status(404).json({ error: "Project not found" });
+ 
 
     const filters = {
-      projectId
+      projectId,
+      ...(status && { status }),
+      ...(assignedUserId && { assignedUserId }),
     };
 
     const tasks = await prisma.task.findMany({
       where: filters,
       include: {
         assignedUser: true, // Include user details
-        project: true, // Include project details
+        // project: true, // Include project details
       },
     });
 
@@ -85,6 +112,20 @@ const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, description, status, assignedUserId } = req.body;
 
+    if (!title && !description && !status && !assignedUserId) { 
+      return res
+        .status(400)
+        .json({ error: "Please provide any of these details to update , title, description, status, assignedUserId" });
+    }
+    if (status && !validStatus.includes(status)) {
+      return res
+        .status(400)
+        .json({
+          error:
+            "Invalid status : status can only have {TODO, IN_PROGRESS, DONE}",
+        });
+    }
+
     const updatedTask = await prisma.task.update({
       where: { id },
       data: { title, description, status, assignedUserId },
@@ -105,7 +146,7 @@ const deleteTask = async (req, res) => {
       where: { id },
     });
 
-     res.status(204).json({ message: "Task Deleted Succesfully" });
+     res.status(200).json({ message: "Task Deleted Succesfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Task not Found or Failed to delete task" });

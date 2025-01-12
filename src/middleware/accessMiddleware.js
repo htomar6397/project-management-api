@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 const authorizeProjectAccess = async (req, res, next) => {
   try {
     const { userId } = req.user; // Extracted from JWT token
-    const { id } = req.params;
-
+    const id  = req.params.id ;
+    
     const project = await prisma.project.findUnique({
       where: { id },
     });
