@@ -3,7 +3,7 @@ const {prisma} = require("../utils/prismaDBconnect");
 
 const checkUniqueEmail = async (req, res, next) => {
     const { email } = req.body;
-    const user = await prisma.user.findFirst({
+   try{ const user = await prisma.user.findFirst({
         where: { email },
     });
     
@@ -12,6 +12,12 @@ const checkUniqueEmail = async (req, res, next) => {
     }
     
     next();
+}
+
+catch(error){
+    console.error(error);
+    res.status(500).json({ message: "Error during unique email check", error: error.message });
+ }
 }
 
 module.exports = checkUniqueEmail;

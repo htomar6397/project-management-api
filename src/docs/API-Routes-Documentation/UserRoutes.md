@@ -99,7 +99,7 @@ Authorization: Bearer <your_token>
 - `/users/e3c4e197-31d1-40ad-bd6c-3e5cec099790`
 
 **Path Parameters:**
-- `id (string): The ID of the user to delete.`
+- `id (string): The ID of the user to update.`
 
 **Request Body:**
 ```json

@@ -24,7 +24,7 @@ const authorizeProjectAccess = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" , error: error.message });
+    res.status(500).json({ message: "Error checking project access " , error: error.message });
   }
 };
 
@@ -56,7 +56,7 @@ const authorizeTaskAccess = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Error checking Task access", error: error.message });
   }
 };
 
