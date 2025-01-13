@@ -30,7 +30,7 @@ Ensure you have the following installed:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/htomar6397/project-management-api.git
    cd project-management-api
    ```
 

@@ -2,6 +2,7 @@
 
 ### 1. **Get User**
 **GET** `/users/:id`
+
 **Headers:**
 ```http
 Authorization: Bearer <your_token>
@@ -51,7 +52,7 @@ Authorization: Bearer <your_token>
 -  `Internal Error`
 ```json
 { 
-    "message": "Failed to get user deatails" , "error": "show error message" 
+    "message": "Failed to get user details" , "error": "show error message" 
 }
 ```
 
@@ -59,6 +60,12 @@ Authorization: Bearer <your_token>
 
 ### 2. **Get Users List**
 **GET** `/users`
+
+**Headers:**
+```http
+Authorization: Bearer <your_token>
+```
+
 **Responses:**
 - `200 OK`
 ```json
@@ -92,7 +99,8 @@ Authorization: Bearer <your_token>
 - `/users/e3c4e197-31d1-40ad-bd6c-3e5cec099790`
 
 **Path Parameters:**
-- `id` (string): The ID of the user to delete.
+- `id (string): The ID of the user to delete.`
+
 **Request Body:**
 ```json
 {
@@ -137,6 +145,12 @@ Authorization: Bearer <your_token>
 
 ### 4. **Delete User (Self-Deletion)**
 **DELETE** `/users/:id`
+
+**Headers:**
+```http
+Authorization: Bearer <your_token>
+```
+
 **Path Parameters:**
 - `id` (string): The ID of the user to delete.
 
