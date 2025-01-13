@@ -66,7 +66,7 @@ Ensure you have the following installed:
 - **POST /auth/register**: Register a new user.
 - **POST /auth/login**: Authenticate a user and return a JWT.
 
-- **require Authentication( Protected )**
+## Below Routes requires Authentication ( Protected Routes )
 ### User Routes
 - **GET /users/:id**: Retrieve a user's details .
 - **GET /users/**: Retrieve the the list of users.
