@@ -27,20 +27,22 @@
     }
 }
 ```
+
+**ERROR**
 - `if any of  these - name, email and password is missing then `
-*For Name*
+-`For Name`
 ```json
 {
     "error": "Name is required and must be a string."
 }
 ```
-*For Email(any@any.any)*
+-`For Email(any@any.any)`
 ```json
 {
     "error": "A valid email is required."
 }
 ```
-*For Password*
+-`For Password`
 ```json
 {
     "error": "Password is required and must be at least 6 characters long."
@@ -50,6 +52,12 @@
 ```json
 {
     "error": "Email already exists"
+}
+```
+- `Internal Error`
+```json
+{
+  "message":"unable to Register", "error": "show error message"
 }
 ```
 
@@ -73,14 +81,15 @@
 }
 ```
 
+**ERROR**
 - `if any of  these - email and password is missing then`
-*For Email(any@any.any)*
+-`For Email(any@any.any)`
 ```json
 {
     "error": "A valid email is required."
 }
 ```
-*For Password*
+-`For Password`
 ```json
 {
     "error": "Password is required and must be at least 6 characters long."
@@ -96,6 +105,12 @@
 ```json
 {
   "error": "Invalid credentials"
+}
+```
+- `Internal Error`
+```json
+{
+  "message":"unable to Login", "error": "show error message"
 }
 ```
 

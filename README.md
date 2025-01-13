@@ -45,6 +45,8 @@ Ensure you have the following installed:
    DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>
    JWT_SECRET=<your-secret-key>
    ```
+   - `by Default <username> -> postgres , <host>:<port> -> localhost:5432 `
+   - `<password> -> created password during setUp postgresql , <database> -> choose any name you want `
 
 4. **Run Prisma Migrations**:
    ```bash
@@ -64,24 +66,25 @@ Ensure you have the following installed:
 - **POST /auth/register**: Register a new user.
 - **POST /auth/login**: Authenticate a user and return a JWT.
 
-//require Authentication
+- **require Authentication( Protected )**
 ### User Routes
-- **GET /users/:id**: Retrieve the current user's details .
+- **GET /users/:id**: Retrieve a user's details .
 - **GET /users/**: Retrieve the the list of users.
-- **PUT /users/:id**: Update the current user's details 
+- **PUT /users/:id**: Update the current user's details (only Name)
 - **DELETE /users/:id**: Delete the logged-in user account.
 
 ### Project Routes
-- **POST /projects**: Create a new project (requires authentication).
-- **GET /projects**: List all projects (requires authentication).
-- **GET /projects/:id**: Get details of a specific project.
+- **POST /projects**: Create a new project .
+- **GET /projects**: List all projects .
+- **PUT /projects/:id**: Upadate a project. (only name, description and status are allowed)
 - **DELETE /projects/:id**: Delete a project and its associated tasks.
 
 ### Task Routes
-- **POST /projects/:projectId/tasks**: Create a new task under a project.
-- **GET /projects/:projectId/tasks**: List all tasks under a project.
-- **PUT /projects/:projectId/tasks/:id**: Update a task.
-- **DELETE /projects/:projectId/tasks/:id**: Delete a task.
+- **POST /projects/:id/tasks**: Create a new task under your project - Require Project Access(project owner only).
+- **GET /projects/:id/tasks**: List all tasks under a project(query parameters - assigned User or/and status) - Require Project Access(project owner only).
+- **GET /tasks**: List all tasks(query parameters - assigned User or/and status).
+- **PUT /tasks/:id**: Update a task - Require Project/Task Access (project owner or assigned user to that task only).
+- **DELETE /tasks/:id**: Delete a task - Require Project/Task Access (project owner or assigned user to that task only).
 
 ---
 

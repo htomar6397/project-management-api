@@ -32,6 +32,8 @@ Authorization: Bearer <your_token>
     }
 }
 ```
+
+**ERROR**:
 - ` if any of name, description and status -> not exists`
 ```json
 { 
@@ -44,7 +46,7 @@ Authorization: Bearer <your_token>
     "error": "Invalid status : status can only have {PLANNED, ONGOING, COMPLETED}" 
 }
 ```
--  'Internal Error'
+-  `Internal Error`
 ```json
 { 
     "message": "Failed to create projects" , "error": "show error message" 
@@ -76,7 +78,8 @@ Authorization: Bearer <your_token>
     }
 ]
 ```
--  'Internal Error'
+**ERROR**:
+-  `Internal Error`
 ```json
 { 
     "message": "Failed to fetch projects" , "error": "show error message" 
@@ -93,7 +96,7 @@ Authorization: Bearer <your_token>
 ```
 
 **Path Parameters:**
-- `id` (string): The ID of the project to Update.
+- `id (string): The ID of the project to Update.`
 
 **Response Body**
 ```json
@@ -116,7 +119,7 @@ Authorization: Bearer <your_token>
     }
 }
 ```
-
+**ERROR**:
 - ` if none of name, description and status -> ALL not exists`
 ```json
 { 
@@ -141,7 +144,7 @@ Authorization: Bearer <your_token>
      "error": "Unauthorized to access this project" 
 }
 ```
--  'Internal Error'
+-  `Internal Error`
 ```json
 { 
     "message": "Failed to update projects" , "error": "show error message" 
@@ -159,7 +162,7 @@ Authorization: Bearer <your_token>
 ```
 
 **Path Parameters:**
-- `id` (string): The ID of the project to delete.
+- `id (string): The ID of the project to delete.`
 
 **Response:**
 - `200 OK`
@@ -168,6 +171,7 @@ Authorization: Bearer <your_token>
   "message": "Project deleted and all associated tasks deleted successfully"
 }
 ```
+**ERROR:**
 - ` if project not found in DB`
 ```json
 {
@@ -180,7 +184,7 @@ Authorization: Bearer <your_token>
      "error": "Unauthorized to access this project" 
 }
 ```
--  'Internal Error'
+-  `Internal Error`
 ```json
 { 
     "message": "Failed to delete projects" , "error": "show error message" 

@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({ token });
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(500).json({message:"unable to Login", error: error.message });
   }
 };
 
@@ -65,7 +65,7 @@ const registerUser = async (req, res) => {
       .json({ message: "User registered successfully", user: newUser });
   } catch (error) {
     console.error("Error during registration:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(500).json({ message: "unable to Register", error: error.message });
   }
 };
 
