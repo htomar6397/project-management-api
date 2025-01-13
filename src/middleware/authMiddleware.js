@@ -17,16 +17,20 @@ const authenticateToken = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // optional ..... => (handle at Frontend)
+    const user = await prisma.user.findFirst({
+      where: { id: decoded.userId },
+    });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ error: "Token with that query does not link to any User" });
+    }
+    //  ......
+    
     req.user = decoded; // Add user info to the request
-
-const user = await prisma.user.findFirst({
-  where: { id: decoded.userId },
-});
-
-
-if (!user) {
-  return res.status(401).json({ error: "Token with that query does not link to any User" });
-}
 
     next();
   } catch (error) {

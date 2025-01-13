@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 const validStatus = ["PLANNED", "ONGOING", "COMPLETED"];
+
 const createProject= async (req, res) => {
   try {
     const { name, description, status } = req.body;
@@ -17,7 +17,7 @@ const createProject= async (req, res) => {
         });
 
     const user = req.user;
-    console.log(user, user.userId);
+    
     
     const newProject = await prisma.project.create({
       data: {
@@ -36,7 +36,9 @@ const createProject= async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create project" });
+    res
+      .status(500)
+      .json({ message: "Failed to create projects", error: error.message });
   }
 };
 
@@ -47,11 +49,11 @@ const listProjects = async (req, res) => {
     res.status(200).json(projects);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to fetch projects" });
+    res.status(500).json({ message: "Failed to fetch projects" , error: error.message });
   }
 };
 
-// Update a Project
+// Update a Project( Only created BY YOU )
 const updateProject =  async (req, res) => {
   try {
     const { id } = req.params;
@@ -84,11 +86,13 @@ const updateProject =  async (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to update project" });
+    res
+      .status(500)
+      .json({ message: "Failed to update projects", error: error.message });
   }
 };
 
-// Delete a Project
+// Delete a Project( Only created BY YOU )
 const deleteProject=   async (req, res) => {
   try {
     const  projectId = req.params.id;
