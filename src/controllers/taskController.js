@@ -1,6 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
+const {prisma} = require('../utils/prismaDBconnect');
 const checkUserExists = require("../utils/checkUserExists");
-const prisma = new PrismaClient();
 const validStatus = ["TODO", "IN_PROGRESS", "DONE"  ];
 //  create a task under a project
 const createTask = async (req, res) => {

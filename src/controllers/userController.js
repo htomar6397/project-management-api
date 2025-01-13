@@ -1,6 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
+const {prisma} = require("../utils/prismaDBconnect");
 const checkUserExists = require("../utils/checkUserExists");
-const prisma = new PrismaClient();
+
 
 // get a  user
 const getUser = async (req, res, ) => {

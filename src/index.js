@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const authRoutes = require("./routes/authRoutes");
+const checkDatabaseConnection = require("./middleware/checkDatabaseConnection");
 // const cors = require("cors");
 
 
@@ -14,7 +15,7 @@ const app = express();
 
 // app.use(cors());
 app.use(bodyParser.json());
-
+app.use(checkDatabaseConnection);
 // Middleware to handle invalid JSON
 // opttional ..... => (handle at frontend)
 app.use((err, req, res, next) => {

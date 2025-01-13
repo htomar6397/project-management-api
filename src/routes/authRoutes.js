@@ -1,6 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const { loginUser, registerUser } = require("../controllers/authController");
+
+const router = express.Router();
 
 // optional ...... validation => ( ALso Done at Frontend)
 // Validate data before processing requests

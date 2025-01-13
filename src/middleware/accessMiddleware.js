@@ -1,5 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const {prisma} = require("../utils/prismaDBconnect");
 
 // Middleware to check if the user is authorized to update/delete a project
 const authorizeProjectAccess = async (req, res, next) => {
