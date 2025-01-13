@@ -1,21 +1,4 @@
-# API Documentation
-
-## Base URL
-All endpoints are prefixed with `/api`. Replace `{BASE_URL}` with the 'http://localhost:3000/api' 
-
----
-
-## Authentication
-### Authenticate Token Middleware
-Every protected route requires a valid JWT token in the `Authorization` header.
-
-```http
-Authorization: Bearer <your_token>
-```
-
----
-
-## Task Routes
+# Task Routes
 
 ### 1. **Create a Task**
 **POST** `/projects/:id/tasks`
@@ -54,6 +37,31 @@ Authorization: Bearer <your_token>
     }
 }
 ```
+**ERROR:**
+- `if any of these - title, description, status and assignedUserId is missing then`
+```json
+{
+    "error": "Please provide title, description, status, assignedUserId"
+}
+```
+- ` if status have value other than -> {TODO, IN_PROGRESS, DONE}`
+```json
+{ 
+    "error": "Invalid status : status can only have {TODO, IN_PROGRESS, DONE}" 
+}
+```
+- `if Assigned User not found in DB`
+```json
+{
+  "error" : "Assigned User not found"
+}
+```
+-  `Internal Error`
+```json
+{ 
+    "message": "Failed to create task" , "error": "show error message" 
+}
+```
 
 ### 2. **List Tasks for a Project**
 **GET** `/projects/:id/tasks`
@@ -70,20 +78,93 @@ Authorization: Bearer <your_token>
 - `200 OK`
 ```json
 [
-  {
-    "id": "taskId",
-    "title": "Task 1",
-    "description": "This is a test task."
-  },
-  {
-    "id": "taskId2",
-    "title": "Task 2",
-    "description": "Another test task."
-  }
+    {
+        "id": "54c01d4d-cff2-48e4-a219-c2ecc4236316",
+        "title": "Design Homepage - Final",
+        "description": "Create wireframes and finalize design",
+        "status": "IN_PROGRESS",
+        "createdAt": "2025-01-13T05:39:18.114Z",
+        "projectId": "e47da334-b2df-427b-ab92-2408157466f4",
+        "assignedUserId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
+        "assignedUser": {
+            "id": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
+            "name": "changed",
+            "email": "xy@xy.xy",
+            "password": "$2b$10$UbnpRKIpUyakpnhsIuzmvOAukrwUfJ9.gW/0/jpad/qqg31Nze1OG",
+            "createdAt": "2025-01-12T16:09:40.044Z"
+        }
+    }
 ]
 ```
+**ERROR:**
+- ` if project is not found in DB`
+```json
+{ 
+    "error": "Project not found" 
+}
+```
+- ` LoggedIN user ID not match with project owner ID -> you can only watch task of projects created by You`
+```json
+{
+     "error": "Unauthorized to access this project" 
+}
+```
+-  `Internal Error`
+```json
+{ 
+    "message": "Failed to fetch tasks under project" , "error": "show error message" 
+}
+```
+
+---
+
 
 ### 3. **List All Task By Filter(assigned User and status)**
+**GET** `/tasks`
+- `/tasks/?status=IN_PROGRESS&assignedUserId=e3c4e197-31d1-40ad-bd6c-3e5cec099790`
+**Headers:**
+```http
+Authorization: Bearer <your_token>
+```
+**Response:**
+```json
+[
+    {
+        "id": "54c01d4d-cff2-48e4-a219-c2ecc4236316",
+        "title": "Design Homepage - Final",
+        "description": "Create wireframes and finalize design",
+        "status": "IN_PROGRESS",
+        "createdAt": "2025-01-13T05:39:18.114Z",
+        "projectId": "e47da334-b2df-427b-ab92-2408157466f4",
+        "assignedUserId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
+        "assignedUser": {
+            "id": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
+            "name": "changed",
+            "email": "xy@xy.xy",
+            "password": "$2b$10$UbnpRKIpUyakpnhsIuzmvOAukrwUfJ9.gW/0/jpad/qqg31Nze1OG",
+            "createdAt": "2025-01-12T16:09:40.044Z"
+        },
+        "project": {
+            "id": "e47da334-b2df-427b-ab92-2408157466f4",
+            "name": "New Website",
+            "description": "Website development project",
+            "status": "ONGOING",
+            "createdAt": "2025-01-13T05:24:55.792Z",
+            "userId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790"
+        }
+    }
+]
+```
+**ERROR:**
+-  `Internal Error`
+```json
+{ 
+    "message": "Failed to fetch tasks" , "error": "show error message" 
+}
+```
+
+---
+
 
 ### 3. **Update a Task**
 **PUT** `/tasks/:id`
@@ -122,14 +203,14 @@ Authorization: Bearer <your_token>
     }
 }
 ```
+**ERROR:**
 - ' if given taskID is not in DB'
 ```json
 {
     "error": "Task not found"
 }
 ```
-
-- ' if the LoggedInUSER(JWT decoded) is not assigned to OR not project owner of that task'
+- ' if the LoggedInUSER(JWT decoded) is (not assigned to that task) AND (not project owner of that task)'
 ```json
 {
     "error": "Unauthorized to access this task"
@@ -147,9 +228,19 @@ Authorization: Bearer <your_token>
     "error": "Invalid status : status can only have {TODO, IN_PROGRESS, DONE}"
 }
 ```
+-  `Internal Error`
+```json
+{ 
+    "message": "Failed to update task" , "error": "show error message" 
+}
+```
+
+---
+
 
 ### 4. **Delete a Task**
 **DELETE** `/tasks/:id`
+- `/tasks/:54c01d4d-cff2-48e4-a219-c2ecc4236316`
 
 **Headers:**
 ```http
@@ -166,23 +257,26 @@ Authorization: Bearer <your_token>
   "message": "Task deleted successfully."
 }
 ```
-
----
-
-## Error Responses
-### Common Error Format
+**ERROR:**
+- ' if given taskID is not in DB'
 ```json
 {
-  "error": "Error message"
+    "error": "Task not found"
+}
+```
+- ' if the LoggedInUSER(JWT decoded) is (not assigned to that task) AND (not project owner of that task)'
+```json
+{
+    "error": "Unauthorized to access this task"
+}
+```
+-  `Internal Error`
+```json
+{ 
+    "message": "Failed to delete task" , "error": "show error message" 
 }
 ```
 
-- `400 Bad Request`: Invalid input.
-- `401 Unauthorized`: Token missing or invalid.
-- `403 Forbidden`: Unauthorized action.
-- `404 Not Found`: Resource not found.
-- `500 Internal Server Error`: Unexpected server error.
-
 ---
-# API Documentation
+
 

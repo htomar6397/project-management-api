@@ -8,15 +8,36 @@ const getUser = async (req, res, ) => {
      try { 
        const user = await checkUserExists(id);
        if (!user) {
-      return res
-        .status(400)
-        .json({ error: "User not exists with this id" });
-    }
-       res.json(user);
+         return res
+         .status(400)
+         .json({ error: "User not exists with this id" });
+        }
+        res.json(user);
 
-     } catch (error) {
-       res.status(400).json({ error: error.message });
+      } catch (error) {
+       res.status(400).json({message:"failed to get user details", error: error.message });
      }
+};
+
+// list all users
+const listUsers = async (req, res) => {
+  try{
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+      // projects: true, // Include related projects if needed
+      // tasks: true, // Include related tasks if needed
+    },
+  });
+
+  res.json(users);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: "Failed to fetch users", error: error.message });
+}
 };
 
 // update a  user (Self-Updation Only)
@@ -61,7 +82,7 @@ const updateUser = async (req, res) => {
 
 
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({message: "failed to update user details", error: error.message });
   }
 };
 
@@ -121,26 +142,12 @@ const deleteUser = async (req, res) => {
   } catch (error) {
     // console.error("Error deleting user:", error);
     res.status(500).json({
-      error: "Failed to delete your account. Please try again later.",
+      error: "Failed to delete your account",
       details: error.message,
     });
   }
 };
 
 
-// list all users
-const listUsers = async (req, res) => {
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      createdAt: true,
-      // projects: true, // Include related projects if needed
-      // tasks: true, // Include related tasks if needed
-    },
-  });
-  res.json(users);
-};
 
 module.exports = { getUser, updateUser, deleteUser, listUsers };

@@ -39,7 +39,7 @@ const createTask = async (req, res) => {
     res.status(201).json({ "message" : "Task created Succesfuly ",newTask});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create task" });
+    res.status(500).json({ message: "Failed to create task", error: error.message });
   }
 };
 
@@ -75,7 +75,7 @@ const listTasksByProject =  async (req, res) => {
     res.status(200).json(tasks);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to fetch tasks" });
+    res.status(500).json({ message: "Failed to fetch tasks under project", error: error.message });
   }
 };
 
@@ -102,7 +102,7 @@ const listTasksByAssignedUserAndStatus =  async (req, res) => {
     res.status(200).json(tasks);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to fetch tasks" });
+    res.status(500).json({ message: "Failed to fetch tasks" , error: error.message });
   }
 };
 
@@ -137,7 +137,7 @@ const updateTask = async (req, res) => {
     res.status(200).json({messsage : "Task Updated Succesfully",updatedTask});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Task not Found or Failed to update task" });
+    res.status(500).json({ message: "Failed to update task", error: error.message });
   }
 };
 // Delete a Task
@@ -152,7 +152,7 @@ const deleteTask = async (req, res) => {
      res.status(200).json({ message: "Task Deleted Succesfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to delete task" });
+    res.status(500).json({ message: "Failed to delete task", error: error.message });
   }
 };
 
