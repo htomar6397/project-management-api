@@ -105,7 +105,7 @@ A video demonstrating endpoint testing is available. Check the `docs/videos/` di
 ## Testing
 
 Use Postman or any API testing tool to test the endpoints. 
-IMPORT Collection From `docs/project management api.postman_collection.json` to Postman(deskto version or VScode Extention)
+-`IMPORT Collection From `docs/project management api.postman_collection.json` to Postman(desktop version or VScode Extention)`
 
 ---
 

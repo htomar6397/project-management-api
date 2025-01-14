@@ -4,7 +4,24 @@
 All endpoints are prefixed with `/api`. Replace `{BASE_URL}` with the 'http://localhost:3000/api' 
 
 ---
+## General Error Responses
 
+- **`DB Disconnect`**: Database connection failed.  
+- **`Missing Token`**: No valid token in the `Authorization` header (Bearer Token).  
+- **`Invalid Token`**: Decoded JWT does not match any user in the database.  
+- **`Expired Token`**: JWT token has expired (1-hour expiration).  
+- **`Invalid JSON`**: Malformed JSON in the request body.  
+- **`Route Not Found`**: Requested route does not exist.  
+- **`Unexpected Error`**: Internal server error.  
+
+### Status Codes
+- `400 Bad Request`: Invalid input.  
+- `401 Unauthorized`: Token missing or invalid.  
+- `403 Forbidden`: Unauthorized action.  
+- `404 Not Found`: Resource not found.  
+- `500 Internal Server Error`: Unexpected server error.  
+
+---
 
 ## Auth Routes
 
@@ -510,22 +527,5 @@ Authorization: Bearer <your_token>
 
 ---
 
-## Error Responses
 
-- **`DB Disconnect`**: Database connection failed.  
-- **`Missing Token`**: No valid token in the `Authorization` header (Bearer Token).  
-- **`Invalid Token`**: Decoded JWT does not match any user in the database.  
-- **`Expired Token`**: JWT token has expired (1-hour expiration).  
-- **`Invalid JSON`**: Malformed JSON in the request body.  
-- **`Route Not Found`**: Requested route does not exist.  
-- **`Unexpected Error`**: Internal server error.  
-
-### Status Codes
-- `400 Bad Request`: Invalid input.  
-- `401 Unauthorized`: Token missing or invalid.  
-- `403 Forbidden`: Unauthorized action.  
-- `404 Not Found`: Resource not found.  
-- `500 Internal Server Error`: Unexpected server error.  
-
----
 
