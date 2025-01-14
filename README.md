@@ -66,25 +66,25 @@ Ensure you have the following installed:
 - **POST /auth/register**: Register a new user.
 - **POST /auth/login**: Authenticate a user and return a JWT.
 
-## Below Routes requires Authentication ( Protected Routes )
+## Protected Routes (Require Authentication)
 ### User Routes
-- **GET /users/:id**: Retrieve a user's details .
-- **GET /users/**: Retrieve the the list of users.
-- **PUT /users/:id**: Update the current user's details (only Name)
-- **DELETE /users/:id**: Delete the logged-in user account.
+- **GET /users/:id**: Retrieve a user's details.  
+- **GET /users/**: Retrieve a list of users.  
+- **PUT /users/:id**: Update the logged-in user's name.  
+- **DELETE /users/:id**: Delete the logged-in user account.  
 
 ### Project Routes
-- **POST /projects**: Create a new project .
-- **GET /projects**: List all projects .
-- **PUT /projects/:id**: Upadate a project. (only name, description and status are allowed)
-- **DELETE /projects/:id**: Delete a project and its associated tasks.
+- **POST /projects**: Create a new project.  
+- **GET /projects**: List all projects.  
+- **PUT /projects/:id**: Update your project (only name, description, status).  
+- **DELETE /projects/:id**: Delete your project and its tasks.  
 
 ### Task Routes
-- **POST /projects/:id/tasks**: Create a new task under your project - Require Project Access(project owner only).
-- **GET /projects/:id/tasks**: List all tasks under a project(query parameters - assigned User or/and status) - Require Project Access(project owner only).
-- **GET /tasks**: List all tasks(query parameters - assigned User or/and status).
-- **PUT /tasks/:id**: Update a task - Require Project/Task Access (project owner or assigned user to that task only).
-- **DELETE /tasks/:id**: Delete a task - Require Project/Task Access (project owner or assigned user to that task only).
+- **POST /projects/:id/tasks**: Create a task under your project.  
+- **GET /projects/:id/tasks**: List all tasks in only your project (query by assigned user/status).  
+- **GET /tasks**: List all tasks (query by assigned user/status).  
+- **PUT /tasks/:id**: Update a task (project owner or assigned user only).  
+- **DELETE /tasks/:id**: Delete a task (project owner or assigned user only).  
 
 ---
 
@@ -105,6 +105,7 @@ A video demonstrating endpoint testing is available. Check the `docs/videos/` di
 ## Testing
 
 Use Postman or any API testing tool to test the endpoints. 
+IMPORT Collection From `docs/project management api.postman_collection.json` to Postman(deskto version or VScode Extention)
 
 ---
 

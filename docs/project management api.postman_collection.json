@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "dc203d7b-325a-41cf-9328-e167ceadf1fb",
+		"name": "project management api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30984417"
+	},
+	"item": [
+		{
+			"name": "User module",
+			"item": [
+				{
+					"name": "Create a new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"xy xy\",\r\n    \"email\": \"xy@xy.xy\",\r\n    \"password\" : \"xyxyxy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the list of users.",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Particular User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/4721d4ab-1b9d-4a1e-9ccb-1cebbaa095a3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"4721d4ab-1b9d-4a1e-9ccb-1cebbaa095a3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an existing user’s details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"changed\",\r\n  \"email\": \"xy@xy.xy\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/19cbc752-6bf0-4d05-b1f8-7b0544c21bb7",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"19cbc752-6bf0-4d05-b1f8-7b0544c21bb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an existing user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/19cbc752-6bf0-4d05-b1f8-7b0544c21bb7",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"19cbc752-6bf0-4d05-b1f8-7b0544c21bb7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project module",
+			"item": [
+				{
+					"name": "Create a project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"New Website\",\r\n  \"description\": \"Website development project\",\r\n  \"status\": \"PLANNED\"\r\n  \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/projects",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/projects",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update project details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/projects/5117c8b3-1abd-418a-a38c-cc408ed95d0f",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects",
+								"5117c8b3-1abd-418a-a38c-cc408ed95d0f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/projects/5117c8b3-1abd-418a-a38c-cc408ed95d0f",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects",
+								"5117c8b3-1abd-418a-a38c-cc408ed95d0f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task module",
+			"item": [
+				{
+					"name": "Create a Task for a Project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Design Homepage\",\r\n  \"description\": \"Create wireframes for the homepage\",\r\n  \"status\": \"TODO\",\r\n  \"assignedUserId\": \"4f195fa2-22a2-4a20-be31-027bf69ce5d1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/projects/79a03e9d-d694-42e2-bba2-4ea5c4da0733/tasks",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects",
+								"79a03e9d-d694-42e2-bba2-4ea5c4da0733",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks for a Project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/projects/79a03e9d-d694-42e2-bba2-4ea5c4da0733/tasks",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"projects",
+								"79a03e9d-d694-42e2-bba2-4ea5c4da0733",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Task by User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/tasks?status=TODO&assignedUserId=4f195fa2-22a2-4a20-be31-027bf69ce5d1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "TODO"
+								},
+								{
+									"key": "assignedUserId",
+									"value": "4f195fa2-22a2-4a20-be31-027bf69ce5d1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Task",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Design Homepage - Final\",\r\n  \"description\": \"Create wireframes and finalize design\",\r\n  \"status\": \"IN_PROGRESS\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tasks/5b7680a5-8814-40db-bc44-db3d9b48a610",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tasks",
+								"5b7680a5-8814-40db-bc44-db3d9b48a610"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/tasks/d7b59680-feb2-4154-93f5-29c55506eede",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tasks",
+								"d7b59680-feb2-4154-93f5-29c55506eede"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login a user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"xy@xy.xy\",\r\n    \"password\": \"xyxyxy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlM2M0ZTE5Ny0zMWQxLTQwYWQtYmQ2Yy0zZTVjZWMwOTk3OTAiLCJlbWFpbCI6Inh5QHh5Lnh5IiwiaWF0IjoxNzM2Nzc3MzQyLCJleHAiOjE3MzY3ODA5NDJ9.hK6ztDkOHkoJPfc6DcxPGpSgMeFz1LFx806iva-72xU",
+				"type": "string"
+			}
+		]
+	}
+}
