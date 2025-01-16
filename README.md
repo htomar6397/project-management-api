@@ -53,8 +53,8 @@ Ensure you have the following installed:
 
 ## Testing
 
-Use Postman or any API testing tool to test the endpoints. 
--`IMPORT Collection From `docs/project management api.postman_collection.json` to Postman(desktop version or VScode Extention)`
+**Use Postman or any API testing tool to test the endpoints.** 
+- IMPORT Collection From `docs/project management api.postman_collection.json` to Postman(desktop version or VScode Extention)
 
 ---
 
