@@ -40,15 +40,29 @@ const createProject = async (req, res) => {
 
 // Get All Projects
 const listProjects = async (req, res) => {
-  try {
-    const projects = await prisma.project.findMany();
-    res.status(200).json(projects);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: "Failed to fetch projects", error: error.message });
-  }
+  const { page, limit } = req.pagination;
+  const skip = (page - 1) * limit;
+
+try {
+  const totalItems = await prisma.project.count();
+  const items = await prisma.project.findMany({
+    skip,
+    take: limit,
+    // select: { id: true, name: true, description: true, status: true }, // Customize the fields as needed
+  });
+
+  res.status(200).json({
+    currentPage: page,
+    totalPages: Math.ceil(totalItems / limit),
+    totalItems,
+    items,
+  });
+} catch (error) {
+  console.error(error);
+  res
+    .status(500)
+    .json({ message: "Failed to fetch projects", error: error.message });
+}
 };
 
 // Update a Project( Only created BY YOU )

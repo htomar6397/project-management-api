@@ -22,19 +22,30 @@ const getUser = async (req, res, ) => {
 // list all users
 const listUsers = async (req, res) => {
   try{
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      createdAt: true,
-      // projects: true, // Include related projects if needed
-      // tasks: true, // Include related tasks if needed
-    },
-  });
+      const { page, limit } = req.pagination;
+      const skip = (page - 1) * limit;
+      const totalItems = await prisma.user.count();
+       
+     const items = await prisma.user.findMany({
+      skip,
+      take: limit,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        // projects: true, // Include related projects if needed
+        // tasks: true, // Include related tasks if needed
+      },
+     });
 
-  res.json(users);
-} catch (error) {
+       res.status(200).json({
+         currentPage: page,
+         totalPages: Math.ceil(totalItems / limit),
+         totalItems,
+         items,
+       });
+  } catch (error) {
   console.error(error);
   res.status(500).json({ message: "Failed to fetch users", error: error.message });
 }

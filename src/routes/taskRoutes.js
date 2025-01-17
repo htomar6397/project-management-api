@@ -1,12 +1,13 @@
 const express = require("express");
 const { updateTask, deleteTask, listTasksByAssignedUserAndStatus } = require("../controllers/taskController");
 const { authorizeTaskAccess } = require("../middleware/accessMiddleware");
+const addPagination = require("../middleware/addPagination");
 
 const router = express.Router();
 
 
 // List Tasks filtered by AssignedUser And Status
-router.get("/", listTasksByAssignedUserAndStatus);
+router.get("/",addPagination, listTasksByAssignedUserAndStatus);
 
 // Update a Task
 router.put("/:id", authorizeTaskAccess, updateTask);

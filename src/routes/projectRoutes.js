@@ -2,6 +2,7 @@ const express = require("express");
 const { authorizeProjectAccess } = require("../middleware/accessMiddleware");
 const { deleteProject, updateProject, listProjects, createProject } = require("../controllers/projectController");
 const { createTask,listTasksByProject } = require("../controllers/taskController");
+const addPagination = require("../middleware/addPagination");
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const router = express.Router();
 router.post("/", createProject);
 
 // Get All Projects
-router.get("/", listProjects);
+router.get("/",addPagination, listProjects);
 
 // Update a Project
 router.put("/:id",authorizeProjectAccess, updateProject);
@@ -22,7 +23,7 @@ router.delete("/:id", authorizeProjectAccess, deleteProject);
 router.post("/:id/tasks",authorizeProjectAccess, createTask); 
 
 // List Tasks for a Specific Project
-router.get("/:id/tasks",authorizeProjectAccess, listTasksByProject); 
+router.get("/:id/tasks",authorizeProjectAccess,addPagination, listTasksByProject); 
 
 
 module.exports = router;
