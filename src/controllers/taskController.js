@@ -48,7 +48,9 @@ const listTasksByProject =  async (req, res) => {
   try {
     const  projectId  = req.params.id;
     const { status, assignedUserId } = req.query;
-    
+    const { page, limit } = req.pagination;
+    const skip = (page - 1) * limit;
+
     const project = await prisma.project.findFirst({
       where: { id: projectId }
     });
@@ -57,22 +59,35 @@ const listTasksByProject =  async (req, res) => {
     if(!project) 
       return res.status(404).json({ error: "Project not found" });
  
+   
 
+         
     const filters = {
       projectId,
       ...(status && { status }),
       ...(assignedUserId && { assignedUserId }),
     };
+     
+       const totalItems = await prisma.task.count({
+         where: filters,
+       });
 
-    const tasks = await prisma.task.findMany({
-      where: filters,
+    const items = await prisma.task.findMany({
+      skip,
+      take: limit,
+     where: filters,
       include: {
         assignedUser: true, // Include user details
         // project: true, // Include project details
       },
     });
 
-    res.status(200).json(tasks);
+    res.status(200).json({
+      currentPage: page,
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
+      items,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch tasks under project", error: error.message });
@@ -84,14 +99,21 @@ const listTasksByAssignedUserAndStatus =  async (req, res) => {
   try {
 
     const { status, assignedUserId } = req.query;
-
+    const { page, limit } = req.pagination;
+    const skip = (page - 1) * limit;
     const filters = {
       
       ...(status && { status }),
       ...(assignedUserId && { assignedUserId }),
     };
+    
+    const totalItems = await prisma.task.count({
+      where: filters,
+    });
 
     const tasks = await prisma.task.findMany({
+      skip,
+      take: limit,
       where: filters,
       include: {
         assignedUser: true, // Include user details
@@ -99,7 +121,12 @@ const listTasksByAssignedUserAndStatus =  async (req, res) => {
       },
     });
 
-    res.status(200).json(tasks);
+    res.status(200).json({
+      currentPage: page,
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
+      tasks,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch tasks" , error: error.message });
