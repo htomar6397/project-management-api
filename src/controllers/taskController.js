@@ -59,10 +59,7 @@ const listTasksByProject =  async (req, res) => {
     if(!project) 
       return res.status(404).json({ error: "Project not found" });
  
-      const totalItems = await prisma.task.count({
-        where: { projectId },
-      });
-
+   
 
          
     const filters = {
@@ -70,6 +67,10 @@ const listTasksByProject =  async (req, res) => {
       ...(status && { status }),
       ...(assignedUserId && { assignedUserId }),
     };
+     
+       const totalItems = await prisma.task.count({
+         where: filters,
+       });
 
     const items = await prisma.task.findMany({
       skip,
