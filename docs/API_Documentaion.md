@@ -147,24 +147,34 @@ Authorization: Bearer <your_token>
 ### 2. **Get Users List**
 
 **GET** `/users`
+- `/users?page=1&limit=2`
+
+**Query Parameters:**
+- `page` (int): The page number of the project requested to retrieve tasks for.
+- `limit` (int): The number of tasks.
 
 **Responses:**
 - `200 OK`
 ```json
-[
-    {
-        "id": "b65c14ba-4dfc-4b3e-8861-5eea753935a3",
-        "name": "xyy xyy",
-        "email": "xyy@xyy.xyy",
-        "createdAt": "2025-01-12T15:59:03.734Z"
-    },
-    {
-        "id": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
-        "name": "xy xy",
-        "email": "xy@xy.xy",
-        "createdAt": "2025-01-12T16:09:40.044Z"
-    }
-]
+{
+    "currentPage": 1,
+    "totalPages": 3,
+    "totalItems": 5,
+    "items": [
+        {
+            "id": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+            "name": "xy xy",
+            "email": "xy@xy.xy",
+            "createdAt": "2025-01-17T10:07:04.511Z"
+        },
+        {
+            "id": "552eae5e-d60f-4485-b9ff-d7d36be810ec",
+            "name": "xy xy",
+            "email": "xyy@xyy.xyy",
+            "createdAt": "2025-01-17T10:15:23.884Z"
+        }
+    ]
+}
 ```
 
 ---
@@ -264,28 +274,38 @@ Authorization: Bearer <your_token>
 ### 2. **List All projects**
 
 **GET** `/projects`
+- `/projects?page=2&limit=2`
+
+**Query Parameters:**
+- `page` (int): The page number of the project requested to retrieve tasks for.
+- `limit` (int): The number of tasks.
 
 **Resonse:**
 - `200 OK`
 ```json
-[
-    {
-        "id": "f9c1246e-dfc2-438b-a5f4-9c1ec8e54316",
-        "name": "New Project 1",
-        "description": "Website development project 1",
-        "status": "PLANNED",
-        "createdAt": "2025-01-12T16:02:51.366Z",
-        "userId": "b65c14ba-4dfc-4b3e-8861-5eea753935a3"
-    },
-    {
-        "id": "a1994796-ca0c-4ebd-b47a-a19b68b6aac9",
-        "name": "New Website 2",
-        "description": "Website development project 2",
-        "status": "PLANNED",
-        "createdAt": "2025-01-12T17:06:35.733Z",
-        "userId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790"
-    }
-]
+{
+    "currentPage": 2,
+    "totalPages": 3,
+    "totalItems": 5,
+    "items": [
+        {
+            "id": "a4594d15-7224-452f-996f-5f8cfa81b245",
+            "name": "New Website",
+            "description": "Website development project",
+            "status": "PLANNED",
+            "createdAt": "2025-01-17T14:41:47.564Z",
+            "userId": "254a4c19-9f3c-4f59-9855-69207b94b87a"
+        },
+        {
+            "id": "b27ebb71-1eca-46f6-90ec-f8e99134855b",
+            "name": "New Website",
+            "description": "Website development project",
+            "status": "PLANNED",
+            "createdAt": "2025-01-17T14:41:44.500Z",
+            "userId": "254a4c19-9f3c-4f59-9855-69207b94b87a"
+        }
+    ]
+}
 ```
 
 ---
@@ -396,31 +416,59 @@ Authorization: Bearer <your_token>
 ### 2. **List Tasks for a Project**
 
 **GET** `/projects/:id/tasks`
+- `/projects/a4594d15-7224-452f-996f-5f8cfa81b245/tasks?page=1&limit=2`
 
 **Path Parameters:**
 - `id` (string): The ID of the project whose tasks you want to retrieve.
 
+**Query Parameters:**
+- `status` (string):  The status of the project being requested.
+- `assignedUserId` (string): The ID of the project whose tasks you want to retrieve.
+- `page` (int): The page number of the project requested to retrieve tasks for.
+- `limit` (int): The number of tasks.
+
 **Response:**
 - `200 OK`
 ```json
-[
-    {
-        "id": "54c01d4d-cff2-48e4-a219-c2ecc4236316",
-        "title": "Design Homepage - Final",
-        "description": "Create wireframes and finalize design",
-        "status": "IN_PROGRESS",
-        "createdAt": "2025-01-13T05:39:18.114Z",
-        "projectId": "e47da334-b2df-427b-ab92-2408157466f4",
-        "assignedUserId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
-        "assignedUser": {
-            "id": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
-            "name": "changed",
-            "email": "xy@xy.xy",
-            "password": "$2b$10$UbnpRKIpUyakpnhsIuzmvOAukrwUfJ9.gW/0/jpad/qqg31Nze1OG",
-            "createdAt": "2025-01-12T16:09:40.044Z"
+{
+    "currentPage": 1,
+    "totalPages": 2,
+    "totalItems": 4,
+    "items": [
+        {
+            "id": "244f6136-9320-49d8-a403-e1a0fd1a9792",
+            "title": "Design Homepage",
+            "description": "Create wireframes for the homepage",
+            "status": "TODO",
+            "createdAt": "2025-01-17T14:44:42.610Z",
+            "projectId": "a4594d15-7224-452f-996f-5f8cfa81b245",
+            "assignedUserId": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+            "assignedUser": {
+                "id": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+                "name": "xy xy",
+                "email": "xy@xy.xy",
+                "password":"$2b$10$kq6duJ6NL0q5gPSFv7dHf.j8tYNkfCWPZQXWaXMn6bCliohmG9gC.",
+                "createdAt": "2025-01-17T10:07:04.511Z"
+            }
+        },
+        {
+            "id": "b490e6cb-44ca-40d7-a222-08f5c2b24161",
+            "title": "Design Homepage",
+            "description": "Create wireframes for the homepage",
+            "status": "TODO",
+            "createdAt": "2025-01-17T14:44:45.712Z",
+            "projectId": "a4594d15-7224-452f-996f-5f8cfa81b245",
+            "assignedUserId": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+            "assignedUser": {
+                "id": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+                "name": "xy xy",
+                "email": "xy@xy.xy",
+                "password":"$2b$10$kq6duJ6NL0q5gPSFv7dHf.j8tYNkfCWPZQXWaXMn6bCliohmG9gC.",
+                "createdAt": "2025-01-17T10:07:04.511Z"
+            }
         }
-    }
-]
+    ]
+}
 ```
 **KNOWN ERRORS:**
 - ` if project is not found in DB`
@@ -428,39 +476,50 @@ Authorization: Bearer <your_token>
 
 ---
 
-### 3. **List All Task By Filter(assigned User and status)**
+### 3. **List All Task - Filter(assigned User and status)**
 
 **GET** `/tasks`
 - `/tasks/?status=IN_PROGRESS&assignedUserId=e3c4e197-31d1-40ad-bd6c-3e5cec099790`
 
+**Query Parameters:**
+- `status` (string):  The status of the project being requested.
+- `assignedUserId` (string): The ID of the project whose tasks you want to retrieve.
+- `page` (int): The page number of the project requested to retrieve tasks for.
+- `limit` (int): The number of tasks.
+
 **Response:**
 ```json
-[
-    {
-        "id": "54c01d4d-cff2-48e4-a219-c2ecc4236316",
-        "title": "Design Homepage - Final",
-        "description": "Create wireframes and finalize design",
-        "status": "IN_PROGRESS",
-        "createdAt": "2025-01-13T05:39:18.114Z",
-        "projectId": "e47da334-b2df-427b-ab92-2408157466f4",
-        "assignedUserId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
-        "assignedUser": {
-            "id": "e3c4e197-31d1-40ad-bd6c-3e5cec099790",
-            "name": "changed",
-            "email": "xy@xy.xy",
-            "password": "$2b$10$UbnpRKIpUyakpnhsIuzmvOAukrwUfJ9.gW/0/jpad/qqg31Nze1OG",
-            "createdAt": "2025-01-12T16:09:40.044Z"
-        },
-        "project": {
-            "id": "e47da334-b2df-427b-ab92-2408157466f4",
-            "name": "New Website",
-            "description": "Website development project",
-            "status": "ONGOING",
-            "createdAt": "2025-01-13T05:24:55.792Z",
-            "userId": "e3c4e197-31d1-40ad-bd6c-3e5cec099790"
+{
+    "currentPage": 1,
+    "totalPages": 4,
+    "totalItems": 4,
+    "tasks": [
+        {
+            "id": "244f6136-9320-49d8-a403-e1a0fd1a9792",
+            "title": "Design Homepage",
+            "description": "Create wireframes for the homepage",
+            "status": "TODO",
+            "createdAt": "2025-01-17T14:44:42.610Z",
+            "projectId": "a4594d15-7224-452f-996f-5f8cfa81b245",
+            "assignedUserId": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+            "assignedUser": {
+                "id": "254a4c19-9f3c-4f59-9855-69207b94b87a",
+                "name": "xy xy",
+                "email": "xy@xy.xy",
+                "password":"$2b$10$kq6duJ6NL0q5gPSFv7dHf.j8tYNkfCWPZQXWaXMn6bCliohmG9gC.",
+                "createdAt": "2025-01-17T10:07:04.511Z"
+            },
+            "project": {
+                "id": "a4594d15-7224-452f-996f-5f8cfa81b245",
+                "name": "New Website",
+                "description": "Website development project",
+                "status": "PLANNED",
+                "createdAt": "2025-01-17T14:41:47.564Z",
+                "userId": "254a4c19-9f3c-4f59-9855-69207b94b87a"
+            }
         }
-    }
-]
+    ]
+}
 ```
 
 ---

@@ -42,12 +42,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/users",
+							"raw": "{{baseURL}}/users?page=1&limit=2",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -153,12 +163,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/projects",
+							"raw": "{{baseURL}}/projects?page=2&limit=2",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"projects"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -248,14 +268,24 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/projects/79a03e9d-d694-42e2-bba2-4ea5c4da0733/tasks",
+							"raw": "{{baseURL}}/projects/a4594d15-7224-452f-996f-5f8cfa81b245/tasks?page=1&limit=2",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"projects",
-								"79a03e9d-d694-42e2-bba2-4ea5c4da0733",
+								"a4594d15-7224-452f-996f-5f8cfa81b245",
 								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -267,7 +297,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/tasks?status=TODO&assignedUserId=4f195fa2-22a2-4a20-be31-027bf69ce5d1",
+							"raw": "{{baseURL}}/tasks?page=1&limit=1`",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -277,11 +307,21 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "TODO"
+									"value": "TODO",
+									"disabled": true
 								},
 								{
 									"key": "assignedUserId",
-									"value": "4f195fa2-22a2-4a20-be31-027bf69ce5d1"
+									"value": "4f195fa2-22a2-4a20-be31-027bf69ce5d1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1`"
 								}
 							]
 						}
@@ -368,7 +408,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlM2M0ZTE5Ny0zMWQxLTQwYWQtYmQ2Yy0zZTVjZWMwOTk3OTAiLCJlbWFpbCI6Inh5QHh5Lnh5IiwiaWF0IjoxNzM2Nzc3MzQyLCJleHAiOjE3MzY3ODA5NDJ9.hK6ztDkOHkoJPfc6DcxPGpSgMeFz1LFx806iva-72xU",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNTRhNGMxOS05ZjNjLTRmNTktOTg1NS02OTIwN2I5NGI4N2EiLCJlbWFpbCI6Inh5QHh5Lnh5IiwiaWF0IjoxNzM3MTMyMjg3LCJleHAiOjE3MzcxMzU4ODd9.lrJJDd3OEm6J19bCFkQXtmnxUxP95wznvTrY0S3jf6U",
 				"type": "string"
 			}
 		]

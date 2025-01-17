@@ -71,6 +71,7 @@ A video demonstrating endpoint testing is available. Check the `docs/videos/` di
 - **Task Management**: Manage tasks under projects, including creation, assignment, updates, and deletions.
 - **Authentication**: Secure endpoints with JWT authentication.
 - **Validation**: Handles request validation and ensures proper data format.
+- **Pagination**: Limit the results returned by the server.
 - **Error Handling**: Handles undefined endpoints, invalid data, and expired tokens gracefully.
 
 ---
